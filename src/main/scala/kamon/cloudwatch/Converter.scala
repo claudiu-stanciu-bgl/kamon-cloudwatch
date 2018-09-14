@@ -3,7 +3,7 @@ package kamon.cloudwatch
 import java.util
 import java.util.Date
 
-import com.amazonaws.services.cloudwatch.model.{ Dimension, MetricDatum, StandardUnit, StatisticSet }
+import com.amazonaws.services.cloudwatch.model.{Dimension, MetricDatum, StandardUnit, StatisticSet}
 import kamon.Tags
 import kamon.cloudwatch.CloudWatchAPIReporter.MeasurementUnitToStandardUnitF
 import kamon.metric._
@@ -65,7 +65,7 @@ private[cloudwatch] case class Converter(configuration: Configuration,
   private[cloudwatch] def convert(metricValue: MetricValue): MetricDatum =
     new MetricDatum()
       .withMetricName(metricValue.name)
-      .withDimensions(toDimensions(metricValue.tags))
+      .withDimensions(toDimensions(configuration.defaultTags ++ metricValue.tags ))
       .withTimestamp(timestamp)
       .withValue(calculateValue(metricValue.unit)(metricValue.value.toDouble))
       .withUnit(toStandardUnit(metricValue.unit))
@@ -76,7 +76,7 @@ private[cloudwatch] case class Converter(configuration: Configuration,
       .map { statisticSet =>
         new MetricDatum()
           .withMetricName(metricDistribution.name)
-          .withDimensions(toDimensions(metricDistribution.tags))
+          .withDimensions(toDimensions(configuration.defaultTags ++ metricDistribution.tags))
           .withTimestamp(timestamp)
           .withStatisticValues(statisticSet)
           .withUnit(toStandardUnit(metricDistribution.unit))

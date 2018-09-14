@@ -49,6 +49,7 @@ private[cloudwatch] class CloudWatchAPIReporter(other: ClientConfiguration, f: M
             _ => ()
           )
         )
+      logger.debug("Pushed CloudWatch metrics")
     }
 
   private def createCloudWatchClient(configuration: Configuration): AmazonCloudWatchAsync =

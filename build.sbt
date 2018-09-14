@@ -1,6 +1,7 @@
-val kamonCore     = "io.kamon"      %% "kamon-core"             % "1.1.3"
-val kamonTestKit  = "io.kamon"      %% "kamon-testkit"          % "1.1.3"
-val awsCloudWatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % "1.11.349"
+  val kamonCore     = "io.kamon"      %% "kamon-core"             % "1.1.3"
+  val kamonTestKit  = "io.kamon"      %% "kamon-testkit"          % "1.1.3"
+  val awsCloudWatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % "1.11.376"
+  val mockito       = "org.mockito"   % "mockito-core"            % "2.20.1"
 
 lazy val root = (project in file("."))
   .settings(name := "kamon-cloudwatch")
@@ -8,7 +9,7 @@ lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++=
       compileScope(kamonCore, awsCloudWatch, scalaCompact.value) ++
-      testScope(scalatest, slf4jApi, slf4jnop, kamonCore, kamonTestKit)
+      testScope(scalatest, slf4jApi, slf4jnop, kamonCore, kamonTestKit, mockito)
   )
 
 def scalaCompact = Def.setting {
